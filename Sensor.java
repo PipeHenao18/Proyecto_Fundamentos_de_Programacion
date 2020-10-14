@@ -27,7 +27,7 @@ public class Sensor
         String est = "";
         if(this.estado == 1){
             est = "Ocupado";
-        }else if(this.estado == 0){
+        }else if(this.estado == 1){
             est = "Libre";
         }        
         return "(" + est + ")";
@@ -36,7 +36,7 @@ public class Sensor
     public static String sensorLibre(){
         String inf = "";
         for(int i = 0; i < sensores.length; i++){
-            if(sensores[i] == null){
+            if(sensores[i] == null || sensores[i].getEstado() == 0){
                 inf = inf.concat("(" + i + ")");
             }
         }
@@ -46,13 +46,11 @@ public class Sensor
     public static String sensoresEstado(){
         String inf = "";
         for(int i = 0; i < sensores.length; i++){
-            String est = "";
-            if(sensores[i].getEstado() == 1){
-                est = "Ocupado";
-            }else if(sensores[i].getEstado() == 0){
-                est = "Libre";
+            if(sensores[i] != null){
+                inf = inf.concat("(" + i + " " + sensores[i].toString().substring(1, sensores[i].toString().length() - 1) + ")");
+            } else{
+                inf = inf.concat("(" + i + " Libre)");
             }
-            inf = inf.concat("(" + i + " " + est + ")");
         }
         return inf;
     }

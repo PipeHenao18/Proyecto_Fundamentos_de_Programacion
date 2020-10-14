@@ -59,15 +59,14 @@ public class Vehiculo
     }
     
     public String toString(){
-        return "( " + this.placa + ", " + this.marca + ", " + this.color + ", " + this.valorComercial + ")";
+        return "(" + this.placa + ", " + this.marca + ", " + this.color + ", " + this.valorComercial + ")";
     }
     
     public static String toStringVehiculos(){
         String inf = "";
         for(int i = 0; i < vehiculos.length; i++){
             if(vehiculos[i] != null){
-                String vehiculo = "( "+vehiculos[i].getPlaca()+", "+vehiculos[i].getMarca()+", " + vehiculos[i].getColor()+", "+vehiculos[i].getValorComercial()+")";
-                inf = inf.concat(vehiculo);
+                inf = inf.concat(vehiculos[i].toString());
             }
         }
         return inf;

@@ -46,7 +46,6 @@ public class Principal
                     Vehiculo.vehiculos[espacio] = new Vehiculo(placa, marca, color);
                     Sensor.sensores[espacio] = new Sensor(1);
                     System.out.println(Vehiculo.vehiculos[espacio].toString());
-                    Vehiculo.cantidad++;
                 }
                 break;
                 
@@ -67,7 +66,6 @@ public class Principal
                     Vehiculo.vehiculos[espacio] = new Vehiculo(placa, marca, color, valorComercial);
                     Sensor.sensores[espacio] = new Sensor(1);
                     System.out.println(Vehiculo.vehiculos[espacio].toString());
-                    Vehiculo.cantidad++;
                 }
                 break;
                 
@@ -94,6 +92,9 @@ public class Principal
                 break;
                 
                 case 8:
+                System.out.println("Ingrese el color que quiere buscar");
+                String color = scan.next();
+                System.out.println(Vehiculo.vehiculosColor(color));
                 break;
                 
                 case 9:
@@ -112,7 +113,7 @@ public class Principal
             System.out.println("3 - Ingresar un nuevo vehículo con valor comercial");
             System.out.println("4 - Información de todos los vehículos parqueados");
             System.out.println("5 - Cantidad de vehiculos parqueados");
-            System.out.println("7 - Estado un sensor");
+            System.out.println("6 - Estado un sensor");
             System.out.println("7 - Estado de los sensores");
             System.out.println("8 - Vehículos de un color");
             System.out.println("9 - Vehículos ordenados por valor comercial");

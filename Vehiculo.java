@@ -17,6 +17,7 @@ public class Vehiculo
         this.marca = m;
         this.color = c;
         this.valorComercial = 30000000;
+        cantidad++;
     }
     
     public Vehiculo(String p, String m, String c, int v){
@@ -24,6 +25,7 @@ public class Vehiculo
         this.marca = m;
         this.color = c;
         this.valorComercial = v;
+        cantidad++;
     }
     
     public String getPlaca(){
@@ -63,16 +65,29 @@ public class Vehiculo
     }
     
     public static String toStringVehiculos(){
-        String inf = "";
+        String str = "";
         for(int i = 0; i < vehiculos.length; i++){
             if(vehiculos[i] != null){
-                inf = inf.concat(vehiculos[i].toString());
+                str = str.concat(vehiculos[i].toString());
             }
         }
-        return inf;
+        return str;
     }
     
     public static int cantidadVehiculos(){
         return cantidad;
+    }
+    
+    public static String vehiculosColor(String c){
+        String str = "";
+        for(int i = 0; i < vehiculos.length; i++){
+            if(vehiculos[i] != null){
+                String color = vehiculos[i].getColor();
+                if(color.equalsIgnoreCase(c)){
+                    str = str.concat(vehiculos[i].toString());
+                }
+            }
+        }
+        return str;
     }
 }

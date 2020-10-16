@@ -34,24 +34,24 @@ public class Sensor
     }
     
     public static String sensorLibre(){
-        String inf = "";
+        String str = "";
         for(int i = 0; i < sensores.length; i++){
             if(sensores[i] == null || sensores[i].getEstado() == 0){
-                inf = inf.concat("(" + i + ")");
+                str = str.concat("(" + i + ")");
             }
         }
-        return inf;
+        return str;
     }
     
     public static String sensoresEstado(){
-        String inf = "";
+        String str = "";
         for(int i = 0; i < sensores.length; i++){
             if(sensores[i] != null){
-                inf = inf.concat("(" + i + " " + sensores[i].toString().substring(1, sensores[i].toString().length() - 1) + ")");
+                str = str.concat("(" + i + " " + sensores[i].toString().substring(1, sensores[i].toString().length() - 1) + ")");
             } else{
-                inf = inf.concat("(" + i + " Libre)");
+                str = str.concat("(" + i + " Libre)");
             }
         }
-        return inf;
+        return str;
     }
 }

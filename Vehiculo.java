@@ -61,7 +61,7 @@ public class Vehiculo
     }
     
     public String toString(){
-        return "(" + this.placa + ", " + this.marca + ", " + this.color + ", " + this.valorComercial + ")";
+        return "Placa: "+this.placa+"   "+"Marca: "+this.marca+"    "+"Color: "+this.color+"    "+"Valor comercial: "+this.valorComercial + "\n";
     }
     
     public static String toStringVehiculos(){
@@ -86,6 +86,39 @@ public class Vehiculo
                 if(color.equalsIgnoreCase(c)){
                     str = str.concat(vehiculos[i].toString());
                 }
+            }
+        }        
+        return str;
+    }
+    
+    public static String ordenValorComercial(){
+        String str = "";
+        Vehiculo temp;
+        Vehiculo[] arr = vehiculos;
+        int n = vehiculos.length;
+        
+        for(int i = 1; i < n ; i++){        
+            for(int j = 0; j < n - i; j++){                
+                 if(arr[j]==null){
+                     temp = arr[j];                    
+                     arr[j] = arr[n-i];                    
+                     arr[n-i] = temp;
+                     break;
+                 }else if(arr[j+1]==null){
+                     temp = arr[j+1];                    
+                     arr[j+1] = arr[n-i];                    
+                     arr[n-i] = temp;
+                     break;
+                 }else if(arr[j].getValorComercial()>arr[j+1].getValorComercial()){                
+                     temp = arr[j];                    
+                     arr[j] = arr[j+1];                    
+                     arr[j+1] = temp;                    
+                 }                
+            }            
+        }
+        for(int i = 0; i < arr.length; i++){
+            if(arr[i] != null){
+                str = str.concat(arr[i].toString());
             }
         }
         return str;

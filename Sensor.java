@@ -24,20 +24,18 @@ public class Sensor
     }    
     
     public String toString(){
-        String est = "";
+        String est = "Libre";
         if(this.estado == 1){
             est = "Ocupado";
-        }else if(this.estado == 1){
-            est = "Libre";
-        }        
-        return "(" + est + ")";
+        }      
+        return est;
     }
     
     public static String sensorLibre(){
         String str = "";
         for(int i = 0; i < sensores.length; i++){
             if(sensores[i] == null || sensores[i].getEstado() == 0){
-                str = str.concat("(" + i + ")");
+                str = str.concat("(" + i + ")"+"\n");
             }
         }
         return str;
@@ -45,11 +43,11 @@ public class Sensor
     
     public static String sensoresEstado(){
         String str = "";
-        for(int i = 0; i < sensores.length; i++){
+        for(int i = 0; i < sensores.length; i++){            
             if(sensores[i] != null){
-                str = str.concat("(" + i + " " + sensores[i].toString().substring(1, sensores[i].toString().length() - 1) + ")");
+                str = str.concat("El espacio " + i + " esta: " + sensores[i].toString() + "\n");
             } else{
-                str = str.concat("(" + i + " Libre)");
+                str = str.concat("El espacio " + i + " esta: " + "Libre" + "\n");
             }
         }
         return str;

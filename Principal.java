@@ -21,7 +21,7 @@ public class Principal
         System.out.println("5 - Cantidad de vehiculos parqueados");
         System.out.println("6 - Consultar el estado de un espacio");
         System.out.println("7 - Mostrar el estado de todos los espacios");
-        System.out.println("8 - Mostrar los vehículos de un color");
+        System.out.println("8 - Consultar los vehículos de un color");
         System.out.println("9 - Mostrar los vehículos ordenados por valor comercial");
         System.out.println("**********************************************************");
         
@@ -34,7 +34,7 @@ public class Principal
                 break;
                 
                 case 2:
-                System.out.println("En que espacio desea parquear");
+                System.out.println("En que espacio desea parquear?");
                 espacio = scan.nextInt();
                 if(Sensor.sensores[espacio] != null){
                     System.out.println("No se puede realizar la acción");
@@ -47,12 +47,12 @@ public class Principal
                     String color = scan.next();
                     Vehiculo.vehiculos[espacio] = new Vehiculo(placa, marca, color);
                     Sensor.sensores[espacio] = new Sensor(1);
-                    System.out.println("La información del vehiculo en el espacio "+espacio+" es la siguente :"+"\n"+Vehiculo.vehiculos[espacio].toString());
+                    System.out.println("La información del vehículo en el espacio "+espacio+" es la siguente :"+"\n"+Vehiculo.vehiculos[espacio].toString());
                 }
                 break;
                 
                 case 3:
-                System.out.println("En que espacio desea parquear");
+                System.out.println("En que espacio desea parquear?");
                 espacio = scan.nextInt();
                 if(espacio<0 || espacio>=espacios){
                     System.out.println("El espacio no existe");
@@ -69,12 +69,12 @@ public class Principal
                     int valorComercial = scan.nextInt();
                     Vehiculo.vehiculos[espacio] = new Vehiculo(placa, marca, color, valorComercial);
                     Sensor.sensores[espacio] = new Sensor(1);
-                    System.out.println("La información del vehiculo en el espacio "+espacio+" es la siguente :"+"\n"+Vehiculo.vehiculos[espacio].toString());
+                    System.out.println("La información del vehículo en el espacio "+espacio+" es la siguente :"+"\n"+Vehiculo.vehiculos[espacio].toString());
                 }
                 break;
                 
                 case 4:
-                System.out.println("La informacion de los vehiculos parqueados es la siguiente: "+"\n"+Vehiculo.toStringVehiculos());
+                System.out.println("La información de los vehículos parqueados es la siguiente: "+"\n"+Vehiculo.toStringVehiculos());
                 break;
                 
                 case 5:
@@ -118,7 +118,7 @@ public class Principal
                 break;
                 
                 case 9:
-                System.out.println("Los vehículos ordenados de menor a mayor valor comercial son los siguientes: "+"\n"+Vehiculo.ordenValorComercial());
+                System.out.println("Los vehículos ordenados por el valor comercial de menor a mayor son los siguientes: "+"\n"+Vehiculo.ordenValorComercial());
                 break;
                 
                 default:

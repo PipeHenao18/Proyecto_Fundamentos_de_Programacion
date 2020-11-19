@@ -1,4 +1,4 @@
-
+import java.util.Date;
 public class Vehiculo
 {
     //Atributos
@@ -6,6 +6,7 @@ public class Vehiculo
     public static int cantidad = 0;
     private String placa, marca, color;
     private int valorComercial;
+    private Date fechaIngreso;
     
     //Metodos
     public Vehiculo(){
@@ -13,11 +14,7 @@ public class Vehiculo
     }
     
     public Vehiculo(String p, String m, String c){
-        this.placa = p;
-        this.marca = m;
-        this.color = c;
-        this.valorComercial = 30000000;
-        cantidad++;
+        this(p,m,c,30000000);
     }
     
     public Vehiculo(String p, String m, String c, int v){
@@ -25,6 +22,7 @@ public class Vehiculo
         this.marca = m;
         this.color = c;
         this.valorComercial = v;
+        this.fechaIngreso = new Date();
         cantidad++;
     }
     
@@ -60,15 +58,25 @@ public class Vehiculo
         this.valorComercial = v;
     }
     
+    public Date getFechaIngreso(){
+        return this.fechaIngreso;
+    }
+    
+    public void setFechaIngreso(Date d){
+        this.fechaIngreso = d;
+    }
+    
     public String toString(){
-        return "Placa: "+this.placa+"   "+"Marca: "+this.marca+"    "+"Color: "+this.color+"    "+"Valor comercial: "+this.valorComercial + "\n";
+        String str = "Placa: "+this.placa+"   "+"Marca: "+this.marca+"    "+"Color: "+this.color+"    "+"Valor comercial: "+this.valorComercial;
+        str = str.concat("    " + "Fecha y hora de ingreso: " + this.fechaIngreso);
+        return str;
     }
     
     public static String toStringVehiculos(){
         String str = "";
         for(int i = 0; i < vehiculos.length; i++){
             if(vehiculos[i] != null){
-                str = str.concat(vehiculos[i].toString());
+                str = str.concat(vehiculos[i].toString()+"\n");
             }
         }
         return str;
@@ -84,7 +92,7 @@ public class Vehiculo
             if(vehiculos[i] != null){
                 String color = vehiculos[i].getColor();
                 if(color.equalsIgnoreCase(c)){
-                    str = str.concat(vehiculos[i].toString());
+                    str = str.concat(vehiculos[i].toString()+"\n");
                 }
             }
         }        
@@ -118,7 +126,7 @@ public class Vehiculo
         }
         for(int i = 0; i < arr.length; i++){
             if(arr[i] != null){
-                str = str.concat(arr[i].toString());
+                str = str.concat(arr[i].toString()+"\n");
             }
         }
         return str;

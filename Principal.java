@@ -1,11 +1,11 @@
-import java.util.Scanner;
-import java.util.Date;
+import java.io.*;
+import java.util.*;
 public class Principal
 {
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException{
         Principal.mostrarMenu();
     }    
-    public static void mostrarMenu(){
+    public static void mostrarMenu() throws IOException{
         Scanner scan = new Scanner(System.in);
         
         System.out.println("Ingrese la cantidad de espacios en el parqueadero");
@@ -14,11 +14,11 @@ public class Principal
         Sensor.sensores = new Sensor[espacios];
         
         System.out.println("Ingrese el valor a cobrar por hora para carros");
-        int costoCarros = scan.nextInt();
+        double costoCarros = scan.nextInt();
         System.out.println("Ingrese el valor a cobrar por hora para motos");
-        int costoMotos = scan.nextInt();
+        double costoMotos = scan.nextInt();
         
-        System.out.println("**********************************************************");
+        System.out.println("*********************************************************************");
         System.out.println("0 - Finalizar programa");
         System.out.println("1 - Mostrar los espacios desocupados");
         System.out.println("2 - Ingresar un nuevo vehículo omitiendo el valor comercial");
@@ -30,8 +30,8 @@ public class Principal
         System.out.println("8 - Consultar los vehículos de un color");
         System.out.println("9 - Mostrar los vehículos ordenados por valor comercial");
         System.out.println("10 - Desactivar sensor manualmente");
-        System.out.println("11 - Exportar la información de los vehículos");
-        System.out.println("**********************************************************");
+        System.out.println("11 - Exportar la información de los vehículos a un documento de texto");
+        System.out.println("*********************************************************************");
         
         int i = scan.nextInt(); 
         int espacio;
@@ -45,7 +45,7 @@ public class Principal
                 System.out.println("En que espacio desea parquear?");
                 espacio = scan.nextInt();
                 try{
-                    if(Sensor.sensores[espacio] != null){
+                    if(Sensor.sensores[espacio] != null && Sensor.sensores[espacio].getEstado() == 1){
                         System.out.println("El espacio esta ocupado, no es posible realizar la acción");
                     }else{
                         System.out.println("Ingrese la placa del vehículo");
@@ -78,10 +78,8 @@ public class Principal
                 System.out.println("En que espacio desea parquear?");
                 espacio = scan.nextInt();
                 try{
-                    if(espacio<0 || espacio>=espacios){
-                        System.out.println("El espacio no existe");
-                    }else if(Sensor.sensores[espacio] != null){
-                        System.out.println("El espacio esta ocupado, no es posible realizar la acción");
+                    if(Sensor.sensores[espacio] != null && Sensor.sensores[espacio].getEstado() == 1){
+                        System.out.println("El espacio esta ocupado, no es posible realizar la acción"+"\n");
                     }else{
                         System.out.println("Ingrese la placa del vehículo");
                         String placa = scan.next();
@@ -107,12 +105,16 @@ public class Principal
                     }
                 }
                 catch(IndexOutOfBoundsException e){
-                    System.out.println("El espacio ingresado no existe");
+                    System.out.println("El espacio ingresado no existe"+"\n");
                 }
                 break;
                 
                 case 4:
-                System.out.println("La información de los vehículos parqueados es la siguiente: "+"\n"+Vehiculo.toStringVehiculos());
+                if(Vehiculo.toStringVehiculos().equals("")){
+                    System.out.println("Aún no hay vehículos parqueados"+"\n");
+                }else{
+                    System.out.println("La información de los vehículos parqueados es la siguiente: "+"\n"+Vehiculo.toStringVehiculos());
+                }
                 break;
                 
                 case 5:
@@ -142,7 +144,7 @@ public class Principal
                     }
                 }
                 catch(IndexOutOfBoundsException e){
-                    System.out.println("El espacio ingresado no existe");
+                    System.out.println("El espacio ingresado no existe"+"\n");
                 }
                 break;
                 
@@ -154,22 +156,57 @@ public class Principal
                 System.out.println("Ingrese el color que quiere buscar");
                 String color = scan.next();
                 if(Vehiculo.vehiculosColor(color).equals("")){
-                    System.out.println("No hay ningun vehículo de ese color");
+                    System.out.println("No hay ningun vehículo de ese color"+"\n");
                 }else{
                     System.out.println("Los vehiculos con el color "+color+" son los siguentes: "+"\n"+Vehiculo.vehiculosColor(color));
                 }
                 break;
                 
                 case 9:
-                System.out.println("Los vehículos ordenados por el valor comercial de menor a mayor son los siguientes: "+"\n"+Vehiculo.ordenValorComercial());
+                if(Vehiculo.ordenValorComercial().equals("")){
+                    System.out.println("Aún no hay vehículos parqueados"+"\n");
+                }else{
+                    System.out.println("Los vehículos ordenados por el valor comercial de menor a mayor son los siguientes: "+"\n"+Vehiculo.ordenValorComercial());
+                }
                 break;
                 
                 case 10:
-                
+                System.out.println("Que sensor desea desactivar");
+                espacio = scan.nextInt();
+                try{
+                    if(Sensor.sensores[espacio] == null || Sensor.sensores[espacio].getEstado()==0){
+                        System.out.println("El espacio seleccionado ya esta libre"+"\n");
+                    }else{
+                        Sensor.sensores[espacio].setEstado(0);                        
+                        System.out.println("El espacio "+espacio+" ahora esta libre");
+                        Date ingreso = Vehiculo.vehiculos[espacio].getFechaIngreso();
+                        double tIngreso = ingreso.getTime();
+                        double tActual = (new Date()).getTime();
+                        double tiempo = tActual-tIngreso;
+                        double horas = tiempo/(3600000);
+                        if(Vehiculo.vehiculos[espacio].tipoVehiculo().equals("Carro")){
+                            System.out.println("El valor a pagar es: " + String.format("%.2f", horas*costoCarros)+"\n");
+                        }else if(Vehiculo.vehiculos[espacio].tipoVehiculo().equals("Moto")){
+                            System.out.println("El valor a pagar es: " + String.format("%.2f", horas*costoMotos)+"\n");
+                        }
+                        Vehiculo.vehiculos[espacio] = null;
+                        Vehiculo.cantidad= Vehiculo.cantidad-1;
+                    }
+                }
+                catch(IndexOutOfBoundsException e){
+                    System.out.println("El espacio ingresado no existe"+"\n");
+                }                
                 break;
                 
                 case 11:
-                
+                PrintWriter infVehiculos = new PrintWriter(new FileWriter("InformacionVehiculos.txt"));
+                if(Vehiculo.toStringVehiculos().equals("")){
+                    infVehiculos.println("Aún no hay vehículos parqueados");
+                }else{
+                    infVehiculos.println("La información de los vehículos parqueados es la siguiente: "+"\n"+Vehiculo.toStringVehiculos());
+                }
+                infVehiculos.close();
+                System.out.println("");                
                 break;
                 
                 default:

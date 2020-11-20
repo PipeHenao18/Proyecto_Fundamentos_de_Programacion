@@ -131,4 +131,7 @@ public class Vehiculo
         }
         return str;
     }
+    public String tipoVehiculo(){
+        return "Vehículo";
+    }
 }
